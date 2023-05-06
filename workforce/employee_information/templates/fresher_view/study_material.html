@@ -1,0 +1,66 @@
+{% extends "fresher_view/base.html" %} {% load humanize %} {% block pageContent %}
+<style>
+    .footer{
+        height: auto;
+        padding: 0px 10px;
+        line-height: 20px;
+        word-wrap: break-word;
+        text-align:center;
+        font-size:20px;
+        background-color:#FAF9F6;
+        padding:10px;
+        font-color:white;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        margin-left:15px;
+     }
+</style>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title mb-0">Study Material</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+                 <div class="row">
+                    <h3>Video Tutorials</h3>
+                    <hr>
+                    
+                    <br>
+                    <br>
+                    {% for video in videos %}
+                    <div class="col-sm-4 " height="200px" style="padding:10px;margin-left:70px;margin-right:40px;"> 
+                    <iframe   height="200px" 
+                        src="{{video.link}}" type="video/mp4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+                <p  class="footer">{{video.name}}</p>
+                     
+            </div>
+           <br>
+                    {% endfor %}
+                    <div>
+                        <h3>Other Details</h3>
+                        <hr></hr>
+                    
+                    <div class="col-md-12 details">
+                        <h4 class="style1" style="color:white;">Company Details</h4>
+
+                        <table class="styled-table table-responsive" style="margin-left:auto;margin-right:auto;">
+                            
+                        
+                        </table>
+                    </div>
+                    <div>
+                  <br>
+                     
+                   
+                     
+                   </div>
+    </div>
+</div>
+
+
+{% endblock pageContent %}

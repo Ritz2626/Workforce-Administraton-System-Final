@@ -1,0 +1,37 @@
+{% extends "lead_view/base.html" %} {% load humanize %} {% block pageContent %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title mb-0">Study Material</h4>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div style="width: 500px; margin: auto;">
+			<fieldset name="Multiple Files Upload">
+				{% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %}
+				<form method="post" action="/study_material" enctype="multipart/form-data" id="resources_upload_form">
+					{% csrf_token %}
+					<p>
+						<label>Title of the video</label>&nbsp;&nbsp;
+							<input type="text" name="name1"  placeholder="Enter name here">
+					</p>
+					<dl>
+						<p>
+							<label>Enter the url of the video</label>&nbsp;&nbsp;
+							<input type="text" name="url" autocomplete="on" >
+						</p>
+					</dl>
+					
+					
+					<p>
+						<input type="submit" value="Submit" name='submit'>
+					</p>
+				</form>
+			</fieldset>
+		</div>
+
+    </div>
+</div>
+{% endblock pageContent %}

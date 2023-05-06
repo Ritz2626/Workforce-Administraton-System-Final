@@ -1,0 +1,129 @@
+{% extends "fresher_view/base.html" %} {% load humanize %} {% block pageContent %}
+<style>
+    .policy-table {
+        color: grey;
+        text-align: center;
+        width:800px;
+        margin-left:100px;
+      }
+      
+      .headings, .policy {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        margin-bottom: 1em;
+        padding: 1em;
+      }
+      .heading1 {
+        flex-basis: 33.333%;
+        font-weight: bold;
+      }
+      
+      .policy {
+        border-radius: 2em;
+        background-color: white;
+        margin-bottom: 20px;
+        -moz-box-shadow: 0 0 3px grey;
+        -webkit-box-shadow: 0 0 3px grey;
+        box-shadow: 0 0 5px grey;
+      }
+      span {
+        flex-basis: 33.333%;
+      }
+      
+      a {
+        text-decoration: none;
+        color: #4c4c4c;
+      }
+      .container2 {
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      <!-- HTML !-->
+      <button class="button-33" role="button">Button 33</button>
+      
+      /* CSS */
+      .button1-33 {
+        n: none;
+        transition: all 250ms;
+        border: 0;
+        font-size: 16px;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;background-color: #c2fbd7;
+        border-radius: 100px;
+        box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+        color: green;
+        cursor: pointer;
+        display: inline-block;
+        font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+        padding: 7px 20px;
+        text-align: center;
+        text-decoratio
+      }
+      
+      .button1-33:hover {
+        box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+        transform: scale(1.05) rotate(-1deg);
+      }
+/* CSS */
+
+
+</style>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title mb-0" >Quizzes</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <hr class="w-100">
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="policy-container">
+    <div class="policy-table">
+      <div class="headings">
+        <span class="heading1">Name</span>
+        <span class="heading1">Date Posted</span>
+        <span class="heading1">Duration</span>
+        <span class="heading1">Actions</span>
+      </div>
+     {% for quiz in quiz %}
+      <div class="policy">
+        <span>{{quiz.name}}</span>
+        <span>{{quiz.date}}</span>
+        <span>{{quiz.duration}} mins</span>
+        <span>
+          <a  href={{quiz.link_quiz}} target="blank"><button class="button1-33" role="button" style="border-radius:12px; n: none;
+            transition: all 250ms;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;background-color: #c2fbd7;
+            border-radius: 100px;
+            box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+            color: green;
+            cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 20px;
+            text-align: center;
+            
+            ">Take Quiz</button></a>
+        </span>
+      </div>
+    {%endfor%}
+      
+    </div>
+  </div>
+</div>
+{%endblock%}
