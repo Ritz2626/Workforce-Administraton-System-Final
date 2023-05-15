@@ -35,6 +35,23 @@
 </head>
 
 <body>
+    <style>
+        .mdc-drawer {
+        
+        
+            background-color: #63a91f;
+            background-image: linear-gradient(314deg, #b66dff 0%, #b66dff 74%);
+    
+            position: fixed;
+            &--open,
+            &__drawer {
+              width: $mdc-drawer-width;
+            }
+            .mdc-card{
+                background:#b9d79b;
+            }
+        }
+    </style>
     <script src="{% static 'employee_information/assets/material-admin/js/preloader.js ' %}"></script>
     <div class="body-wrapper">
         <!-- Aside -->

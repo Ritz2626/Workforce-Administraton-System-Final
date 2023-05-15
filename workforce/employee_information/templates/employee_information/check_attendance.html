@@ -1,0 +1,182 @@
+{% extends "employee_information/base.html" %}{% load humanize %} {% block pageContent %}
+<style>
+    input[type="dat"]{
+        background-color: #0080ff;
+        padding: 15px;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        top: 50%;
+        left: 50%;
+        bottom:50%;
+        font-family: "Roboto Mono",monospace;
+        color: #ffffff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+    }
+    ::-webkit-calendar-picker-indicator{
+        background-color: #ffffff;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    td,th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even){background-color: #f2f2f2;}
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        
+        color: white;
+      }
+
+</style>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card ">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Attendance Records Check</h4>
+            
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <hr class="w-100">
+</div>
+<form class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12" method="post" action="/attendance-check">
+    {% csrf_token %}
+    <label for="date1" style="margin:8px;">Search by Date</label>
+
+    <input type="date" placeholder="search by date" name='date1' id='date1'>
+    <br>
+    <button type="submit" style="margin:8px;">Submit</button>
+</form>
+
+{% if present %}
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+    <table>
+        <thead style="background-color:#6f42c1;">
+            <th>Employee Code</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>In-time</th>
+            <th>Out-time</th>
+            <th>Attendance</th>
+        </thead>
+<h4 style="text-align:center;font-color:grey;">List of Employees who were Present</h4>
+{% endif %}
+<br>
+{% for emp in present %}
+
+<tr>
+<td>{{emp.employee_id.code}}</td>
+ <td> {{emp.employee_id}}</td>
+ <td>{{emp.date}}</td>
+ <td>  {{emp.intime}}</td>
+<td>  {{emp.outime}}</td>
+<td>{{emp.status}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+{% if absent %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+    <table>
+        <thead style="background-color:#04AA6D;">
+            <th>Employee Code</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>In-time</th>
+            <th>Out-time</th>
+            <th>Attendance</th>
+        </thead>
+<h4 style='text-align:center;'>List of Employees who were Absent</h4>
+<br>
+{% endif %}
+{% for emp in absent %}
+<tr>
+    <td>{{emp.employee_id.code}}
+ <td> {{emp.employee_id}}</td>
+ <td>{{emp.date}}</td>
+ <td>  {{emp.intime}}</td>
+<td>  {{emp.outime}}</td>
+<td>{{emp.status}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+
+{% if excused %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+    <table>
+        <thead style="background-color:#04AA6D;">
+            <th>Employee Code</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>In-time</th>
+            <th>Out-time</th>
+            <th>Attendance</th>
+        </thead>
+<h4 style='text-align:center;'>List of Employees who were on Leave</h4>
+<br>
+{% endif %}
+{% for emp in excused %}
+<tr>
+    <td>{{emp.employee_id.code}}
+ <td> {{emp.employee_id}}</td>
+ <td>{{emp.date}}</td>
+ <td>  {{emp.intime}}</td>
+<td>  {{emp.outime}}</td>
+<td>{{emp.status}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+<div
+id="myChart" style="width:100%; max-width:700px; height:500px; margin-left:140px;">
+</div>
+
+<script>
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+const data = google.visualization.arrayToDataTable([
+  ['Status', 'Count'],
+  ['Present',{{count_p}}],
+  ['Absent',{{count_a}}],
+  ['Leave',{{count_e}}],
+  
+]);
+
+const options = {
+  title:'Percentage attendance of employees on {{date}}',
+  is3D:true
+};
+
+const chart = new google.visualization.PieChart(document.getElementById('myChart'));
+  chart.draw(data, options);
+}
+
+</script>
+</div>
+</div>
+
+{% endblock %}

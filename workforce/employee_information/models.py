@@ -88,3 +88,21 @@ class Task(models.Model):
     author=models.CharField(max_length=255)
     assigned=models.ForeignKey(Employees, on_delete=models.CASCADE)
     date= models.DateField(blank=True,default=now)
+
+status_choices=(
+    ("Present","Present"),
+    ("Absent","Absent"),
+    ("Excused","Excused"),
+)
+class Attendance(models.Model):
+    intime=models.TimeField()
+    outime=models.TimeField()
+    date=models.DateField(blank=True)
+    employee_id=models.ForeignKey(Employees, on_delete=models.CASCADE) 
+    status=models.CharField(max_length=20,choices=status_choices,default='Absent')
+
+    class Meta:
+        unique_together = ['employee_id', 'date']
+
+    def __str__(self):
+        return str(self.date.strftime('%B %d %Y'))+' '+self.employee_id.firstname

@@ -73,3 +73,5 @@ def leave_request(request):
             return render(request,'employee_view/leave_request.html')
         messages.error(request,'failed to Request a Leave,please check entry dates',extra_tags = 'alert alert-warning alert-dismissible show')
     return render(request,'employee_view/leave_request.html',{'form':form})
+
+    

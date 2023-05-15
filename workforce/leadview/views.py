@@ -110,12 +110,25 @@ def delete(request, id):
   member.delete()
   return HttpResponseRedirect(reverse('file-upload'))
 
+def delete_material(request,id):
+    material=video.objects.get(id=id)
+    material.delete()
+    return HttpResponseRedirect(reverse('study_material'))
+
+
+
 def study_material(request):
+    pid=request.user
+    c=Employees.objects.get(code=pid).department_id
+    video_list=video.objects.filter(department=c)
+    context={
+        'video_list':video_list,
+        }
     if request.method=='POST':
-         name=request.POST['name1']
-         link=request.POST['url']
-         pid=request.user
-         c=Employees.objects.get(code=pid).department_id
-         store=video(name=name,link=link,department=c)
-         store.save()
-    return render(request,'lead_view/study_material.html')
+        name=request.POST['name1']
+        link=request.POST['url']
+        pid=request.user
+        c=Employees.objects.get(code=pid).department_id
+        store=video(name=name,link=link,department=c)
+        store.save()
+    return render(request,'lead_view/study_material.html',context)

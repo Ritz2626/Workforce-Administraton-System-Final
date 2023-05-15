@@ -29,5 +29,6 @@ urlpatterns = [
     path('notifications',views.notifications,name="notifications"),
     path('employee_dashboard/<int:pid>',views.employee_dashboard,name="employee_dashboard"),
     path('teamlead_dashboard/<int:pid>',views.teamlead_dashboard,name="teamlead_dashboard"),
-
+    path('attendance',views.attendance,name="attendance"),
+    path('attendance-check',views.attendance_check,name="attendance-check"),
 ]

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from employee_information.models import Department, Position, Employees,Project,notification,Task
+from employee_information.models import Department, Position, Employees,Project,notification,Task,Attendance
 from leadview.models import files1
 from employeeview.models import Leave
 # Register your models here.
@@ -11,3 +11,4 @@ admin.site.register(notification)
 admin.site.register(Task)
 admin.site.register(files1)
 admin.site.register(Leave)
+admin.site.register(Attendance)

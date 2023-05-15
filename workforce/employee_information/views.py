@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from employee_information.models import Department, Position, Employees,Project,notification
+from employee_information.models import Department, Position, Employees,Project,notification,Attendance
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 import json
@@ -410,3 +411,52 @@ def fresher_dashboard(request,pid):
     }
     return render(request,'fresher_view/home_fresher.html',context)
 
+def attendance(request):
+    employees=Attendance.objects.filter(date=timezone.now().date())
+    present=Attendance.objects.filter(date=timezone.now().date()).exclude(status='Present')
+
+    print(employees)
+    
+    if request.method=='POST':
+     query=request.POST['date1']
+     date1=Attendance.objects.filter(date=query)
+     context={
+        'employees':employees,
+        'present':present,
+         'date1':date1,
+    }
+     print(context)
+     return render(request, 'employee_information/attendance.html', context)
+    else:
+        context={
+        'employees':employees,
+        'present':present,
+        
+    }
+    return render(request, 'employee_information/attendance.html', context)
+
+
+def attendance_check(request):
+    if request.method=='POST':
+     query=request.POST['date1']
+     present=Attendance.objects.filter(date=query,status='Present')
+     count_p=Attendance.objects.filter(date=query,status='Present').count()
+     count_a=Attendance.objects.filter(date=query,status='Absent').count()
+     count_e=Attendance.objects.filter(date=query,status='Excused').count()
+     absent=Attendance.objects.filter(date=query,status='Absent')
+     excused=Attendance.objects.filter(date=query,status='Excused')
+     
+     context={
+         'present':present,
+         'absent':absent,
+         'excused':excused,
+         'count_p':count_p,
+         'count_a':count_a,
+         'count_e':count_e,
+         'date':query,
+    }
+     return render(request, 'employee_information/check_attendance.html', context)
+    else:
+      return render(request, 'employee_information/check_attendance.html', {})
+
+    

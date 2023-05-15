@@ -1,0 +1,56 @@
+{% extends "employee_information/base.html" %}{% load humanize %} {% block pageContent %}
+<style>
+    td,th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      tr:nth-child(even){background-color: #f2f2f2;}
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color:#6f42c1;
+        color: white;
+      }
+
+</style>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card ">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Attendance List</h4>
+            
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <hr class="w-100">
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Date</th>
+            <th>In-time</th>
+            <th>Out-time</th>
+            <th>Attendance</th>
+        </thead>
+        
+    {% for employee in employees %}
+    
+    <tr>
+     <td> {{employee.employee_id}}</td>
+     <td>{{employee.date}}</td>
+     <td>  {{employee.intime}}</td>
+    <td>  {{employee.outime}}</td>
+    <td>{{employee.status}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</div>
+
+
+
+{% endblock %}

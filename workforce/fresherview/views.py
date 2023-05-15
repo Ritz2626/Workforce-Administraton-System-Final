@@ -35,3 +35,6 @@ def study(request):
         'videos':videos,
     }
     return render(request,'fresher_view/study_material.html',context)
+
+def fresher_attendance(request):
+    return render(request,'fresher_view/check_attendance.html')

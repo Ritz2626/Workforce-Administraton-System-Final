@@ -1,4 +1,19 @@
 {% extends "lead_view/base.html" %} {% load humanize %} {% block pageContent %}
+<style>
+	td{
+		padding:30px;
+	}
+	.btn {
+		cursor: pointer;
+		border: 1px solid #3498db;
+		background-color: transparent;
+		height: 50px;
+		width: 200px;
+		color: #3498db;
+		font-size: 1.5em;
+		box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+	}
+</style>
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card">
         <div class="d-flex justify-content-between">
@@ -34,4 +49,30 @@
 
     </div>
 </div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+
+<div style="margin:20px;">
+	<table style= "list-style-type: none;
+	">
+{% for video in video_list %}
+	
+	  <tr style="padding: 10px;
+	  background-color: #D6EEEE;">
+	  <td>
+		<iframe   height="150px" 
+		src="{{video.link}}" type="video/mp4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+		allowfullscreen style="float":left;>
+         </iframe></td>
+		 <br>
+		<td><h3>{{video.name}}</h3></td>
+		
+		<td ><a href="delete_material/{{video.id}}"><button class="btn">Remove</button></td>
+		</tr>
+	
+	
+{% endfor %}
+	</table>
+</div>
+</div>
+
 {% endblock pageContent %}

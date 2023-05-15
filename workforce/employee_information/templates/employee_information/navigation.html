@@ -35,19 +35,20 @@
                     </a>
                 </div>
                 <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" >
+                    <a class="mdc-drawer-link" href="{% url 'attendance' %}" >
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">check</i> Mark Attendance
                     </a>
                 </div>
-               
-                <div class="mdc-list-item mdc-drawer-item">
-                    <a class="mdc-drawer-link" >
-                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">visibility</i> Check Attendance
-                    </a>
-                </div>
+                
+                
                 <div class="mdc-list-item mdc-drawer-item">
                     <a class="mdc-drawer-link" >
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">assignment</i> Approve Leaves
+                    </a>
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'attendance-check' %}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">visibility</i> Check Attendance
                     </a>
                 </div>
                 <div class="mdc-list-item mdc-drawer-item">
@@ -55,6 +56,7 @@
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">stars</i> Assign Bonuses
                     </a>
                 </div>
+                
                 <div class="mdc-list-item mdc-drawer-item" >
                     <a class="mdc-drawer-link" href="{% url 'notifications' %}">
                         <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">message</i> Send Notifications

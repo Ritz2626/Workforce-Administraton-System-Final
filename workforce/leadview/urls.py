@@ -10,5 +10,6 @@ urlpatterns = [
      path('team_details',views.team_details,name="team_details"),
      path('file-upload',views.file_upload,name="file-upload"),
      path('delete/<int:id>',views.delete,name='delete'),
-     path('study_material',views.study_material,name='study_material')
+     path('study_material',views.study_material,name='study_material'),
+     path('delete_material/<int:id>',views.delete_material,name='delete_material')
 ]
