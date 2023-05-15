@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Q
+
 
 
 import json
@@ -416,10 +418,20 @@ def attendance(request):
     present=Attendance.objects.filter(date=timezone.now().date()).exclude(status='Present')
 
     print(employees)
+    l=list(employees)
+    print(l)
+    marked=[o.employee_id.code for o in employees]
+    print(len(marked))
+    emp=Employees.objects.exclude(code='134').count()
+    print(emp)
     
+   
     if request.method=='POST':
      query=request.POST['date1']
      date1=Attendance.objects.filter(date=query)
+     print(date1)
+     
+     
      context={
         'employees':employees,
         'present':present,

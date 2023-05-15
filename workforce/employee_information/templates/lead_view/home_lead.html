@@ -1,4 +1,73 @@
 {% extends "lead_view/base.html" %} {% load humanize %} {% block pageContent %}
+<style>
+    .mdc-drawer {
+        
+        
+        background-color: #63a91f;
+        background-image: linear-gradient(314deg, #C86B85 0%, #C86B85 74%);
+
+        position: fixed;
+        &--open,
+        &__drawer {
+          width: $mdc-drawer-width;
+        }
+        .mdc-card{
+            background:#b9d79b;
+        }
+    }
+
+        
+            .card1
+            {
+                border-radius:10px;
+                background-color:#E6A4B4
+                ;
+                background:#e6a4b480
+
+                ;
+                box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+                backdrop-filter: blur( 14px );
+        -webkit-backdrop-filter: blur( 4px );
+        border-radius: 10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+        font-family:"Times New Roman";
+        font-size:1vw;
+        padding:30px;
+            }
+           .details h4
+           {
+            color:grey;
+            font-family:"Times New Roman";
+           }
+           .styled-table {
+            border-collapse: collapse;
+            margin: 25px 130px;
+            font-size: 0.9em;
+            font-family: 'Times New Roman';
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            width:55%;
+            padding:10px;
+            
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            font-size:1.4em;
+            margin-left:110px;
+        }
+        .style1 {
+            background-color: 
+            #E6A4B4;
+            text-align: center;
+            color:white;
+            font-size:1.9em;
+        }
+        .styled-table tr {
+            
+            text-align:left;
+            
+        }
+    </style>
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card">
         <div class="d-flex justify-content-between">
@@ -45,6 +114,87 @@
         </div>
     </div>
 </div>
+
+{%for employee in data%}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+                 <div class="row">
+                    <h3>Details</h3>
+                    <hr>
+                    <div class="col-sm-6 form-group">
+                       <img src="/media/{{employee.photo}}" width="150px" style="display:block;margin-left:auto;margin-right:auto;">
+                    </div>
+                    <div class="col-sm-6 card1">
+                        <br>
+                        
+                       <h4>Name:-{{employee.firstname}} {{employee.lastname}}</h4>
+                       <h4>Employee Id:-{{employee.code}}</h4>
+                       <h4>Email id:-{{employee.email}}</h4>
+                        
+                    </div>
+                    <br>
+                    <br>
+                    
+                    <div>
+                        <h3>Other Details</h3>
+                        <hr></hr>
+                    <div class="col-md-12 details">
+                        <h4 class="style1" style="color:white;">Personal Details</h4>
+
+                        <table class="styled-table table-responsive" style="margin-left:auto;margin-right:auto;">
+                            <tr>
+                            
+                        <td>Date of Birth</td>
+                        
+                        <td>{{employee.dob}}</td>
+                            </tr>
+                            <tr>
+                        <td>Gender</td>
+                        <td>{{employee.gender}}</td>
+                            </tr>
+                            <tr>
+                        <td>Address</td>
+                        <td>{{employee.address}}</td>
+                        </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-12 details">
+                        <h4 class="style1" style="color:white;">Company Details</h4>
+
+                        <table class="styled-table table-responsive" style="margin-left:auto;margin-right:auto;">
+                            <tr>
+                            
+                        <td>Date of Joining</td>
+                        
+                        <td>{{employee.date_hired}}</td>
+                            </tr>
+                            <tr>
+                        <td>Salary Per Month</td>
+                        <td>Rs. {{employee.salary}}</td>
+                            </tr>
+                            <tr>
+                        <td>Department</td>
+                        <td>{{dept}}</td>
+                        </tr>
+                        <tr>
+                            <td>Position</td>
+                            <td>{{pos}}</td>
+                        </tr>
+                            <tr>
+                                <td>Project Assigned</td>
+                                <td>{{proj}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                  <br>
+                     
+                   
+                     
+                   </div>
+    </div>
+</div>
+{% endfor %}
 
 <!--<div>
     open file <iframe src={{proj.files.url}}>open</a>
