@@ -31,6 +31,7 @@
     <table>
         <thead>
             <th>Name</th>
+            <th>Code</th>
             <th>Date</th>
             <th>In-time</th>
             <th>Out-time</th>
@@ -41,6 +42,8 @@
     
     <tr>
      <td> {{employee.employee_id}}</td>
+     <td> {{employee.employee_id.code}}</td>
+
      <td>{{employee.date}}</td>
      <td>  {{employee.intime}}</td>
     <td>  {{employee.outime}}</td>
@@ -50,6 +53,46 @@
     </table>
 </div>
 </div>
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Date</th>
+            <th>In-time</th>
+            <th>Out-time</th>
+            <th>Attendance</th>
+            <th>Save</th>
+        </thead>
+        
+    {% for e in emp %}
+    {%if e.code not in marked%}
+    <form method="post" action="/attendance" id="attendance_form">
+    {% csrf_token %}
+    <tr>
+     <td>{{e}} </td>
+     <input type = "hidden" name = "personnel" value = {{e.code}}>
+     <td>{{d}}</td>
+     <td><input type="time"  name="intime"></td>
+    <td><input type="time" placeholder="Out-time" name="outtime"></td>
+    <td><select id="status" name="status">
+        <option value="Present">Present</option>
+        <option value="Absent">Absent</option>
+        <option value="Excused">Excused</option>
+       
+      </select></td>
+    <td><input type="submit" value="Mark"></td>
+    </tr>
+   </form>
+    {% endif %}
+    {% endfor %}
+    </table>
+</div>
+</div>
+
+
 
 
 

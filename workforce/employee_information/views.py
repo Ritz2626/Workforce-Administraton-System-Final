@@ -415,37 +415,48 @@ def fresher_dashboard(request,pid):
 
 def attendance(request):
     employees=Attendance.objects.filter(date=timezone.now().date())
+    d=timezone.now().date()
     present=Attendance.objects.filter(date=timezone.now().date()).exclude(status='Present')
 
     print(employees)
-    l=list(employees)
+    l=(employees)
     print(l)
     marked=[o.employee_id.code for o in employees]
-    print(len(marked))
-    emp=Employees.objects.exclude(code='134').count()
-    print(emp)
     
+    print((marked))
+    emp=Employees.objects.all()
+    print(emp)
+    context={
+        'employees':employees,
+        'present':present,
+         
+         'emp':emp,
+         'marked':marked,
+         'd':d,
+    }
    
     if request.method=='POST':
-     query=request.POST['date1']
-     date1=Attendance.objects.filter(date=query)
-     print(date1)
+     e=request.POST['personnel']
+     e1=Employees.objects.filter(code=e).first()
+     inn=request.POST['intime']
+     out=request.POST['outtime']
+     s=request.POST['status']
+     store=Attendance(intime=inn,outime=out,date=d,employee_id=e1,status=s)
+     store.save()
+    
      
      
      context={
         'employees':employees,
         'present':present,
-         'date1':date1,
+         
+         'emp':emp,
+         'marked':marked,
+         'd':d,
     }
      print(context)
-     return render(request, 'employee_information/attendance.html', context)
-    else:
-        context={
-        'employees':employees,
-        'present':present,
-        
-    }
     return render(request, 'employee_information/attendance.html', context)
+    
 
 
 def attendance_check(request):

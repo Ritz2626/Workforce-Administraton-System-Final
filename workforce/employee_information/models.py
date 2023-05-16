@@ -95,10 +95,10 @@ status_choices=(
     ("Excused","Excused"),
 )
 class Attendance(models.Model):
-    intime=models.TimeField()
-    outime=models.TimeField()
+    intime=models.TimeField(null=True,blank=True)
+    outime=models.TimeField(null=True,blank=True)
     date=models.DateField(blank=True)
-    employee_id=models.ForeignKey(Employees, on_delete=models.CASCADE) 
+    employee_id=models.ForeignKey(Employees, on_delete=models.CASCADE)
     status=models.CharField(max_length=20,choices=status_choices,default='Absent')
 
     class Meta:
