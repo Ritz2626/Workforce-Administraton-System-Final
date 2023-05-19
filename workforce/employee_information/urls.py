@@ -31,4 +31,5 @@ urlpatterns = [
     path('teamlead_dashboard/<int:pid>',views.teamlead_dashboard,name="teamlead_dashboard"),
     path('attendance',views.attendance,name="attendance"),
     path('attendance-check',views.attendance_check,name="attendance-check"),
+    path('stats',views.stats,name='stats')
 ]

@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models import Q
+from datetime import datetime, timedelta
 
 
 
@@ -417,24 +418,13 @@ def attendance(request):
     employees=Attendance.objects.filter(date=timezone.now().date())
     d=timezone.now().date()
     present=Attendance.objects.filter(date=timezone.now().date()).exclude(status='Present')
-
     print(employees)
     l=(employees)
     print(l)
     marked=[o.employee_id.code for o in employees]
-    
     print((marked))
     emp=Employees.objects.all()
-    print(emp)
-    context={
-        'employees':employees,
-        'present':present,
-         
-         'emp':emp,
-         'marked':marked,
-         'd':d,
-    }
-   
+    
     if request.method=='POST':
      e=request.POST['personnel']
      e1=Employees.objects.filter(code=e).first()
@@ -443,9 +433,15 @@ def attendance(request):
      s=request.POST['status']
      store=Attendance(intime=inn,outime=out,date=d,employee_id=e1,status=s)
      store.save()
-    
-     
-     
+
+     employees=Attendance.objects.filter(date=timezone.now().date())
+     d=timezone.now().date()
+     present=Attendance.objects.filter(date=timezone.now().date()).exclude(status='Present')
+     l=(employees)
+     marked=[o.employee_id.code for o in employees]
+     print("new",marked)
+     emp=Employees.objects.all()
+
      context={
         'employees':employees,
         'present':present,
@@ -453,8 +449,18 @@ def attendance(request):
          'emp':emp,
          'marked':marked,
          'd':d,
+     }
+
+     return render(request,'employee_information/attendance.html', context)
+
+    context={
+        'employees':employees,
+        'present':present,
+         
+         'emp':emp,
+         'marked':marked,
+         'd':d,
     }
-     print(context)
     return render(request, 'employee_information/attendance.html', context)
     
 
@@ -468,11 +474,15 @@ def attendance_check(request):
      count_e=Attendance.objects.filter(date=query,status='Excused').count()
      absent=Attendance.objects.filter(date=query,status='Absent')
      excused=Attendance.objects.filter(date=query,status='Excused')
+     not_working=Attendance.objects.filter(date=query,status="Not a Working Day")
+     d=Attendance.objects.filter(date__range=["2023-05-14", "2023-05-17"])
+     print(d)
      
      context={
          'present':present,
          'absent':absent,
          'excused':excused,
+         'not_working':not_working,
          'count_p':count_p,
          'count_a':count_a,
          'count_e':count_e,
@@ -481,5 +491,40 @@ def attendance_check(request):
      return render(request, 'employee_information/check_attendance.html', context)
     else:
       return render(request, 'employee_information/check_attendance.html', {})
+
+def stats(request):
+    now = datetime.now()
+    data=[]
+    start=['Day','Present','Absent','Leave']
+    data.append(start)
+    for x in range(7):
+      d = now - timedelta(days=x)
+      p=Attendance.objects.filter(status='Present',date=d).count()
+      a=Attendance.objects.filter(status='Absent',date=d).count()
+      l=Attendance.objects.filter(status='Excused',date=d).count()
+      d=d.strftime('%B %d %Y')
+      l=[d,p,a,l]
+      data.append(l)
+      print(l)
+      
+    dept=Department.objects.all()
+    d=[o.pk for o in dept]
+    m=[o.name for o in dept]
+    dept_list = [str(r) for r in m]
+
+    print(d)
+    l=list()
+    for i in range(1,len(d)):
+        n=Employees.objects.filter(department_id=i).count()
+        print(i,n)
+        l.append(n)
+    print(dept_list,l)
+    context={
+        'dept_list':dept_list,
+        'count':l,
+        'data':data,
+
+    }
+    return render(request,'employee_information/stats.html',context)
 
     

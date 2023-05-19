@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from employee_information.models import Department, Position, Employees,Project
+from employee_information.models import Department, Position, Employees,Project,notification
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -132,3 +132,13 @@ def study_material(request):
         store=video(name=name,link=link,department=c)
         store.save()
     return render(request,'lead_view/study_material.html',context)
+
+def notices_lead(request):
+    context={
+        'notices':notification.objects.order_by('-time')
+    }
+    return render(request,'lead_view/notices.html',context)
+
+def team_attendance(request):
+    pid=request.user
+    

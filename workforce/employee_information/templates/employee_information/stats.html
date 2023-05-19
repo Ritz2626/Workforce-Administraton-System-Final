@@ -1,0 +1,64 @@
+{% extends "employee_information/base.html" %}{% load humanize %} {% block pageContent %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Current Stastical Data of the Company</h4>
+            
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+<h4>Departwise Employees Count</h3>   
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div id="myPlot" style="width:100%;" ></div>
+
+<script>
+var xArray ={{dept_list|safe}};
+var yArray = {{count}};
+
+var data = [{
+  x:xArray,
+  y:yArray,
+
+  type:"bar",
+  
+}];
+
+var layout = {title:"Department Wise Employees"};
+
+Plotly.newPlot("myPlot", data, layout);
+</script>
+</div>
+</div>
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+<div id="columnchart_material" style="width: 800px; height: 500px;">
+</div>   
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{data|safe}}
+         );
+
+        var options = {
+          chart: {
+            title: 'Attendance Data of Employees for Last 7 days',
+           
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+</div>
+</div>
+{% endblock %}

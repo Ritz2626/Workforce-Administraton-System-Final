@@ -74,7 +74,7 @@ class Employees(models.Model):
     photo=models.ImageField(null=True, blank=True ,upload_to = 'photos')
     
     def __str__(self):
-        return self.firstname + ' ' +self.middlename + ' '+self.lastname + ' '
+        return self.firstname + ' ' +self.middlename + ' '+self.lastname + ' '+self.code
     
 
 class notification(models.Model):
@@ -93,6 +93,7 @@ status_choices=(
     ("Present","Present"),
     ("Absent","Absent"),
     ("Excused","Excused"),
+    ("Not a Working Day","Not a Working Day")
 )
 class Attendance(models.Model):
     intime=models.TimeField(null=True,blank=True)
@@ -101,8 +102,14 @@ class Attendance(models.Model):
     employee_id=models.ForeignKey(Employees, on_delete=models.CASCADE)
     status=models.CharField(max_length=20,choices=status_choices,default='Absent')
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     class Meta:
         unique_together = ['employee_id', 'date']
+
+    
 
     def __str__(self):
         return str(self.date.strftime('%B %d %Y'))+' '+self.employee_id.firstname

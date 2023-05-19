@@ -10,5 +10,6 @@ urlpatterns = [
      #path('employee_dashboard/<int:pid>',views.employee_dashboard,name="employee_dashboard"),
      path('notices_emp',views.notices_emp,name="notices_emp"),
      path('current_project',views.current_project,name="current_project"),
-     path('leave_request',views.leave_request,name="leave_request")
+     path('leave_request',views.leave_request,name="leave_request"),
+     path('employee_attendance',views.employee_attendance,name='employee_attendance')
 ]

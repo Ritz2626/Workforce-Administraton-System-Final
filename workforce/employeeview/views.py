@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 import json
-from employee_information.models import Employees,Project
+from employee_information.models import Employees,Project,Attendance
 from leadview.models import files1
 from .forms import LeaveCreationForm
 from django.contrib import messages
@@ -75,3 +75,23 @@ def leave_request(request):
     return render(request,'employee_view/leave_request.html',{'form':form})
 
     
+def employee_attendance(request):
+    if request.method=='POST':
+     query1=request.POST['startdate']
+     query2=request.POST['enddate']
+     pid=request.user
+     n=Employees.objects.filter(code=pid)
+     f=Employees.objects.filter(code=pid).values
+     p=Employees.objects.get(code=pid).pk
+     attend=Attendance.objects.filter(date__range=[query1,query2],employee_id=p).order_by('-date')
+     print(attend)
+     
+     context={
+        'attend':attend,
+        'n':n
+
+     }
+     return render(request,'employee_view/check_attendance.html',context)
+    else:
+     context={}
+     return render(request,'employee_view/check_attendance.html',context)

@@ -118,6 +118,8 @@
 }
 
 </style>
+
+
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card ">
         <div class="d-flex justify-content-between align-items-center">
@@ -137,6 +139,14 @@
     <br>
     <button type="submit" class="button-34" style="margin:8px;">Submit</button>
 </form>
+
+{% if not_working %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <h4 class="head" style='text-align:center;'>Not a Working Day</h4>
+    </div>
+</div>
+{% endif %}
 
 {% if present %}
 
@@ -159,7 +169,7 @@
 
 <tr>
 <td>{{emp.employee_id.code}}</td>
- <td> {{emp.employee_id}}</td>
+ <td> {{emp.employee_id.firstname}} {{emp.employee_id.middlename}} {{emp.employee_id.lastname}}</td>
  <td>{{emp.date}}</td>
  <td>  {{emp.intime}}</td>
 <td>  {{emp.outime}}</td>
@@ -187,10 +197,10 @@
 {% for emp in absent %}
 <tr>
     <td>{{emp.employee_id.code}}
- <td> {{emp.employee_id}}</td>
+ <td> {{emp.employee_id.firstname}} {{emp.employee_id.middlename}} {{emp.employee_id.lastname}}</td>
  <td>{{emp.date}}</td>
- <td>  {{emp.intime}}</td>
-<td>  {{emp.outime}}</td>
+ <td>-</td>
+<td>-</td>
 <td>{{emp.status}}</td>
 </tr>
 {% endfor %}
@@ -216,17 +226,20 @@
 {% endif %}
 {% for emp in excused %}
 <tr>
-    <td>{{emp.employee_id.code}}
- <td> {{emp.employee_id}}</td>
+    <td>{{emp.employee_id.code}}</td>
+ <td> {{emp.employee_id.firstname}} {{emp.employee_id.middlename}} {{emp.employee_id.lastname}}</td>
  <td>{{emp.date}}</td>
- <td>  {{emp.intime}}</td>
-<td>  {{emp.outime}}</td>
+ <td>-</td>
+<td>-</td>
 <td>{{emp.status}}</td>
 </tr>
 {% endfor %}
 </table>
 </div>
 </div>
+
+
+
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -247,6 +260,7 @@ const data = google.visualization.arrayToDataTable([
   ['Present',{{count_p}}],
   ['Absent',{{count_a}}],
   ['Leave',{{count_e}}],
+ 
   
 ]);
 

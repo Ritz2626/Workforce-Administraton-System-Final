@@ -1,4 +1,4 @@
-{% extends "fresher_view/base.html" %} {% load humanize %} {% block pageContent %}
+{% extends "employee_view/base.html" %} {% load humanize %} {% block pageContent %}
 <style>
     input[type="dat"]{
         background-color: #0080ff;
@@ -129,7 +129,7 @@
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <hr class="w-100">
 </div>
-<form class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12" method="post" action="/fresher_attendance">
+<form class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12" method="post" action="/employee_attendance">
     {% csrf_token %}
     <label for="startdate" class="date1" style="margin:8px;">Search by Date</label>
     <input type="date" placeholder="search by date" name='startdate' id='startdate'>
@@ -167,6 +167,7 @@
 <td>None</td>
 <td>None</td>
 {%endif%}
+
 <td>{{emp.status}}</td>
 </tr>
 {%endfor%}

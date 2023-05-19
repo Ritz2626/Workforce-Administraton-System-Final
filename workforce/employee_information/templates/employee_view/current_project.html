@@ -42,7 +42,7 @@
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card">
         <div class="d-flex justify-content-between">
-            <h4 class="card-title mb-0">Details of the Current Project-{{proj.name}}</h4>
+            <h4 class="card-title mb-0">Details of the Current Project {{proj.name}}</h4>
             
         </div>
     </div>
@@ -51,9 +51,12 @@
 <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
     <div class="mdc-card">
 {% for proj in proj %}
-<h4>Name of the Current Project-{{proj.name}}</h4>
-<h4>Team Lead of the Project-{{proj.project_lead}}</h4>
-<h4>Start Date of the Project-{{proj.start_date}}</h4>
+<h4 style="font-family:Times new roman;">Name of the Current Project-{{proj.name}}</h4>
+<br>
+<h4 style="font-family:Times new roman;">Team Lead of the Project-{{proj.project_lead}}</h4>
+<br>
+<h4 style="font-family:Times new roman;">Start Date of the Project-{{proj.start_date}}</h4>
+<br>
 
 {% endfor %}
 <table class="styled-table">

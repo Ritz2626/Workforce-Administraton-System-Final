@@ -3,6 +3,9 @@ from employee_information.models import Department, Position, Employees,Project,
 from leadview.models import files1
 from employeeview.models import Leave
 # Register your models here.
+
+class AttendanceAdmin(admin.ModelAdmin):
+    list_display = ('employee_id', 'date', 'status')
 admin.site.register(Department)
 admin.site.register(Position)
 admin.site.register(Employees)
@@ -11,4 +14,4 @@ admin.site.register(notification)
 admin.site.register(Task)
 admin.site.register(files1)
 admin.site.register(Leave)
-admin.site.register(Attendance)
+admin.site.register(Attendance,AttendanceAdmin)

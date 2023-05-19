@@ -41,12 +41,21 @@
     {% for employee in employees %}
     
     <tr>
-     <td> {{employee.employee_id}}</td>
+    <td> {{employee.employee_id.firstname}} {{employee.employee_id.middlename}} {{employee.employee_id.lastname}}</td>
      <td> {{employee.employee_id.code}}</td>
 
      <td>{{employee.date}}</td>
-     <td>  {{employee.intime}}</td>
-    <td>  {{employee.outime}}</td>
+     {% if employee.status == 'Absent' %}
+     <td>None</td>
+    <td>None</td>
+    {% elif employee.status == 'Present' %}
+     <td>{{employee.intime}}</td>
+    <td>{{employee.outime}}</td>
+    {% else %}
+    <td>None</td>
+    <td>None</td>
+    {%endif%}
+    
     <td>{{employee.status}}</td>
     </tr>
     {% endfor %}
@@ -72,7 +81,7 @@
     <form method="post" action="/attendance" id="attendance_form">
     {% csrf_token %}
     <tr>
-     <td>{{e}} </td>
+     <td>{{e.firstname}} {{e.middlename}} {{e.lastname}} </td>
      <input type = "hidden" name = "personnel" value = {{e.code}}>
      <td>{{d}}</td>
      <td><input type="time"  name="intime"></td>
@@ -83,7 +92,7 @@
         <option value="Excused">Excused</option>
        
       </select></td>
-    <td><input type="submit" value="Mark"></td>
+    <td><input type="submit" value="Submit"></td>
     </tr>
    </form>
     {% endif %}
@@ -92,7 +101,11 @@
 </div>
 </div>
 
-
+<script>
+    document.getElementById("attendance_form").onsubmit = function(){
+		location.reload(true);
+	}
+</script>
 
 
 
