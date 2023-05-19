@@ -84,7 +84,7 @@ def employee_attendance(request):
      f=Employees.objects.filter(code=pid).values
      p=Employees.objects.get(code=pid).pk
      attend=Attendance.objects.filter(date__range=[query1,query2],employee_id=p).order_by('-date')
-     print(attend)
+   
      
      context={
         'attend':attend,

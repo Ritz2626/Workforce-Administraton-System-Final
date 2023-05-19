@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from employee_information.models import Department, Position, Employees,Project,notification
+from employee_information.models import Department, Position, Employees,Project,notification,Attendance
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -15,6 +15,8 @@ from .forms import UploadFileForm
 from leadview.models import files1
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 
 employees = [
@@ -71,8 +73,7 @@ def file_upload(request):
         c=Employees.objects.get(code=pid).project_id.name
         file_list=files1.objects.filter(project_id1=c)
 
-        print(files)
-        print(name2)
+        
         print(form.is_valid())
         print(form.errors)
         pid=request.user
@@ -141,4 +142,24 @@ def notices_lead(request):
 
 def team_attendance(request):
     pid=request.user
+    proj=Employees.objects.get(code=pid).project_id
+    a=Employees.objects.filter(project_id=proj)
+    team=[o.pk for o in a]
+    elem1=Attendance.objects.filter(employee_id=team[0],date=timezone.now().date())
+
+    for i in range(1,len(team)):
+        elem=Attendance.objects.filter(employee_id=team[i],date=timezone.now().date())
+        print(elem)
+        elem1=elem1.union(elem)
+    print(elem1)
+    all=Attendance.objects.filter(date=timezone.now().date())
+    
+    context={
+        'team':elem1,
+       
+    }
+    return render(request,'lead_view/team_attendance.html',context)
+
+
+
     

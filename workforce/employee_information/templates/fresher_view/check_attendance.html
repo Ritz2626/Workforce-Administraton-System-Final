@@ -157,12 +157,12 @@
 
 <tr>
  <td>{{emp.date}}</td>
- {% if employee.status == 'Absent' %}
+ {% if emp.status == 'Absent' %}
  <td>None</td>
 <td>None</td>
-{% elif employee.status == 'Present' %}
- <td>{{employee.intime}}</td>
-<td>{{employee.outime}}</td>
+{% elif emp.status == 'Present' %}
+ <td>{{emp.intime}}</td>
+<td>{{emp.outime}}</td>
 {% else %}
 <td>None</td>
 <td>None</td>
