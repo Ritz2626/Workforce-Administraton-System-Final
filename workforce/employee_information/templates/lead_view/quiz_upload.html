@@ -1,0 +1,214 @@
+{% extends "lead_view/base.html" %} {% load humanize %} {% block pageContent %}
+<style>
+	td{
+		padding:30px;
+	}
+	.btn {
+		cursor: pointer;
+		border: 1px solid #3498db;
+		background-color: transparent;
+		height: 50px;
+		width: 200px;
+		color: #3498db;
+		font-size: 1.5em;
+		box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+	}
+    
+        input[type="dat"]{
+            background-color: #0080ff;
+            padding: 15px;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 50%;
+            left: 50%;
+            bottom:50%;
+            font-family: "Roboto Mono",monospace;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            border:1px solid black;
+        }
+        ::-webkit-calendar-picker-indicator{
+            background-color: #ffffff;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            border:1px solid black;
+            
+        }
+        input[type="date"]::-webkit-clear-button {
+            display: none;
+            border:1px solid black;
+        }
+        
+        /* Removes the spin button */
+        input[type="date"]::-webkit-inner-spin-button { 
+            display: none;
+            border:1px solid black;
+        }
+        
+        /* Always display the drop down caret */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            color: #2c3e50;
+            border:1px solid black;
+        }
+        
+        /* A few custom styles for date inputs */
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            color: #95a5a6;
+            font-family: "Helvetica", arial, sans-serif;
+            font-size: 18px;
+            border:1px solid #ecf0f1;
+            background:#ecf0f1;
+            padding:5px;
+            display: inline-block !important;
+            visibility: visible !important;
+            
+        }
+        
+        input[type="date"], focus {
+            color: #95a5a6;
+            box-shadow: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            border:1px solid grey;
+            border-radius:10px;
+        }
+        td,th {
+            border: 1px solid #ddd;
+            padding: 8px;
+          }
+          tr:nth-child(even){background-color: #f2f2f2;}
+          th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            
+            color: white;
+          }
+          
+    
+    /* CSS */
+    .button-34 {
+      background: #5E5DF0;
+      border-radius: 999px;
+      box-shadow: #5E5DF0 0 10px 20px -10px;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      cursor: pointer;
+      font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 24px;
+      opacity: 1;
+      outline: 0 solid transparent;
+      padding: 8px 18px;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      width: fit-content;
+      word-break: break-word;
+      border: 0;
+    }
+    .date1
+    {
+        font-size:20px;
+    }
+    .head
+    {
+        text-align:center;
+        font-color:grey;
+        background-color:#80808030;
+        padding:10px;
+        
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        margin-left:auto;
+        margin-right:auto;
+    
+    }
+    
+    
+</style>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title mb-0">Upload Quiz</h4>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div style="width: 500px; margin: auto;">
+			<fieldset name="Multiple Files Upload">
+				{% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %}
+				<form method="post" action="/quiz_upload" enctype="multipart/form-data" id="quiz_upload_form">
+					{% csrf_token %}
+                    <h3>Enter Quiz details to Upload</h3>
+					<p>
+						<label>Name </label>&nbsp;&nbsp;
+							<input type="text" name="name_quiz"  placeholder="Enter name here">
+					</p>
+					<dl>
+						<p>
+							<label>Enter the link of the quiz</label>&nbsp;&nbsp;
+							<input type="text" name="url_quiz" autocomplete="on" >
+						</p>
+					</dl>
+                    <p>
+                        <label>Enter the duration</label>&nbsp;&nbsp;
+                        <input type="text" name="time" autocomplete="on" >
+                    </p>
+                    <p>
+                        <label>Enter the link of the answers</label>&nbsp;&nbsp;
+                        <input type="text" name="url_ans" autocomplete="on" >
+                    </p>
+					
+					
+					<p>
+						<input type="submit" value="Submit" name='submit'>
+					</p>
+				</form>
+			</fieldset>
+		</div>
+
+    </div>
+</div>
+
+{% if quiz_list %}
+
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card" >
+        <table>
+            <thead style="background-color:#04AA6D;">
+                <th>Name</th>
+                <th>Quiz Link</th>
+                <th>Duration</th>
+                <th>Answer Link</th>
+                <th>Delete</th>
+                </thead>
+{% for quiz in quiz_list %}
+	
+	  <td>{{quiz.name}}</td>
+		 
+		<td><a href="{{quiz.link_quiz}}">Quiz Link</td>
+		<td>{{quiz.duration}} mins</td>
+        <td><a href="{{quiz.link_answer}}">Answer Link</td>
+        <td><a href="delete_quiz/{{quiz.id}}">
+                <button class="mdc-button mdc-button--raised p-1 icon-button filled-button--primary mdc-ripple-upgraded delete-data" type="button"  title="Delete">
+                    <i class="material-icons mdc-button__icon">deleteoutline</i>
+                </button></a></td>
+		</tr>
+	
+	
+{% endfor %}
+	</table>
+</div>
+</div>
+{% endif %}
+
+{% endblock pageContent %}

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 import json
 from employee_information.models import Employees
-from fresherview.models import video
+from fresherview.models import video,Quiz
 from employee_information.views import team_details
 from .forms import UploadFileForm
 from leadview.models import files1
@@ -134,6 +134,24 @@ def study_material(request):
         store.save()
     return render(request,'lead_view/study_material.html',context)
 
+def quiz_upload(request):
+    pid=request.user
+    c=Employees.objects.get(code=pid).department_id
+    quiz_list=Quiz.objects.filter(department=c)
+    context={
+        'quiz_list':quiz_list,
+        }
+    if request.method=='POST':
+        name=request.POST['name_quiz']
+        link1=request.POST['url_quiz']
+        duration=request.POST['time']
+        link2=request.POST['url_ans']
+        pid=request.user
+        c=Employees.objects.get(code=pid).department_id
+        store=Quiz(name=name,link_quiz=link1,duration=duration,department=c,link_answer=link2)
+        store.save()
+    return render(request,'lead_view/quiz_upload.html',context)
+
 def notices_lead(request):
     context={
         'notices':notification.objects.order_by('-time')
@@ -160,6 +178,10 @@ def team_attendance(request):
     }
     return render(request,'lead_view/team_attendance.html',context)
 
+def delete_quiz(request,id):
+    quiz=Quiz.objects.get(id=id)
+    quiz.delete()
+    return HttpResponseRedirect(reverse('quiz_upload'))
 
 
-    
+  

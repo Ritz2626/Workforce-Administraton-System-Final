@@ -69,6 +69,7 @@
     <table>
         <thead>
             <th>Name</th>
+            <th>Code</th>
             <th>Date</th>
             <th>In-time</th>
             <th>Out-time</th>
@@ -78,10 +79,11 @@
         
     {% for e in emp %}
     {%if e.code not in marked%}
-    <form method="post" action="/attendance" id="attendance_form">
+    <form method="post" action="/attendance1" id="attendance_form">
     {% csrf_token %}
     <tr>
      <td>{{e.firstname}} {{e.middlename}} {{e.lastname}} </td>
+     <td>{{e.code}}</td>
      <input type = "hidden" name = "personnel" value = {{e.code}}>
      <td>{{d}}</td>
      <td><input type="time"  name="intime"></td>
